@@ -20,6 +20,13 @@ return new class extends Migration
             $table->foreignId('tipe_observasi_id')->constrained('tipe_observasis');
             $table->foreignId('kategori_id')->constrained('kategoris');
             $table->foreignId('clsr_id')->constrained('clsrs');
+            $table->string('nama_pegawai');
+            $table->string('email_pegawai');
+            $table->string('nama_fungsi');
+            $table->string('lokasi_spesifik');
+            $table->string('deskripsi_observasi');
+            $table->string('direct_action');
+            $table->string('non_clsr'); // Add your column here
             $table->timestamps();
         });
     }

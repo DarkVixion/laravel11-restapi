@@ -16,6 +16,11 @@ class Kategori extends Model
         return $this->hasMany(Laporan::class);
     }
 
+    public function tindaklanjutss()
+    {
+        return $this->hasMany(TindakLanjut::class);
+    }
+
     public function parent()
     {
         return $this->belongsTo(Kategori::class, 'kategori_id');

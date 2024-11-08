@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('role_id')->constrained('roles');
             $table->unsignedBigInteger('role_id')->default(1)->change();
-            $table->foreignId('fungsi_id')->constrained('fungsi');
+            $table->foreignId('fungsi_id')->constrained('fungsis');
         });
     }
 

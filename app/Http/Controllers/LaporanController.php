@@ -10,10 +10,50 @@ use App\Models\Laporan;
 use App\Models\Lokasi;
 use App\Models\TipeObservasi;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class LaporanController extends Controller
 {
     // GET: /laporans
+    public function index3()
+    {
+        // Get the start and end of the current week, with week starting on Saturday and ending on Friday
+        $startOfWeek = Carbon::now()->startOfWeek(Carbon::SATURDAY);
+        $endOfWeek = Carbon::now()->endOfWeek(Carbon::FRIDAY);
+    
+        // Filter laporans to show only those created in the current customized week
+        $laporans = Laporan::whereBetween('created_at', [$startOfWeek, $endOfWeek])->get();
+    
+        // Modify each laporan to include the full image URL
+        foreach ($laporans as $laporan) {
+            if ($laporan->img) {
+                $laporan->img_url = asset('storage/' . $laporan->img);
+            }
+        }
+    
+        return response()->json($laporans, 202);
+    }
+    
+    public function index2()
+{
+    // Get the start and end of the current month
+    $startOfMonth = Carbon::now()->startOfMonth();
+    $endOfMonth = Carbon::now()->endOfMonth();
+
+    // Filter laporans to show only those created in the current month
+    $laporans = Laporan::whereBetween('created_at', [$startOfMonth, $endOfMonth])->get();
+
+    // Modify each laporan to include the full image URL
+    foreach ($laporans as $laporan) {
+        if ($laporan->img) {
+            $laporan->img_url = asset('storage/' . $laporan->img);
+        }
+    }
+
+    return response()->json($laporans, 202);
+}
+
+    
     public function index()
 {
     $laporans = Laporan::all();
@@ -60,7 +100,8 @@ public function show($id)
         'lokasi_spesifik' => 'required|string',
         'deskripsi_observasi' => 'required|string',
         'direct_action' => 'required|string',
-        'saran_aplikasi' => 'required|string',
+        'non_clsr' => 'required|string',
+        
     ]);
 
     // Initialize the path for the image
@@ -90,7 +131,8 @@ public function show($id)
         'lokasi_spesifik' => $request->lokasi_spesifik,
         'deskripsi_observasi' => $request->deskripsi_observasi,
         'direct_action' => $request->direct_action,
-        'saran_aplikasi' => $request->saran_aplikasi,
+        'non_clsr'=> $request->non_clsr,
+        
     ]);
 
     return response()->json(['laporan' => $laporan], 201);
@@ -115,15 +157,32 @@ public function show($id)
         return response()->json($kategori);
     }
 
+    public function showKategoriID($id)
+    {
+        $kategoriID = Kategori::findOrFail($id);
+        return response()->json($kategoriID);
+    }
+
     public function showLokasi()
     {
         $lokasi = Lokasi::all();
         return response()->json($lokasi);
+    }
+    public function showLokasiID($id)
+    {
+        $lokasis = Lokasi::findOrFail($id);
+        return response()->json($lokasis,203);
     }
 
     public function showCLSR()
     {
         $clsr = CLSR::all();
         return response()->json($clsr);
+    }
+    
+    public function showCLSRID($id)
+    {
+        $clsr = CLSR::findOrFail($id);
+        return response()->json($clsr,203);
     }
 }

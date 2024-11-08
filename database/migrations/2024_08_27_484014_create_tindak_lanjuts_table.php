@@ -19,6 +19,15 @@ return new class extends Migration
             $table->text('deskripsi');
             $table->string('img', 255)->nullable();
             $table->foreignId('laporan_id')->constrained('laporans');
+            $table->date('tanggal_akhir')->nullable();
+            $table->foreignId('lokasi_id')->constrained('lokasis');
+            $table->foreignId('tipe_observasi_id')->constrained('tipe_observasis');
+            $table->foreignId('kategori_id')->constrained('kategoris');
+            $table->foreignId('clsr_id')->constrained('clsrs');
+            $table->string('detail_lokasi');
+            $table->string('direct_action');
+            $table->string('non_clsr');
+            $table->string('follow_up');
             $table->timestamps();
         });
     }

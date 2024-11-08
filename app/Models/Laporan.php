@@ -23,7 +23,7 @@ class Laporan extends Model
         'lokasi_spesifik',
         'deskripsi_observasi' ,
         'direct_action' ,
-        'saran_aplikasi' ,
+        'non_clsr',
         ];
 
     public function pengguna()

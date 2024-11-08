@@ -16,6 +16,11 @@ class Lokasi extends Model
         return $this->hasMany(Laporan::class);
     }
 
+    public function tindaklanjuts()
+    {
+        return $this->hasMany(TindakLanjut::class);
+    }
+
     public function parent()
     {
         return $this->belongsTo(Lokasi::class, 'lokasi_id');

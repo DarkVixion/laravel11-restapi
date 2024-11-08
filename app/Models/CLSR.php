@@ -16,4 +16,9 @@ class CLSR extends Model
     {
         return $this->hasMany(Laporan::class);
     }
+
+    public function tindaklanjuts()
+    {
+        return $this->hasMany(TindakLanjut::class);
+    }
 }
